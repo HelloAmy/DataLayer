@@ -49,6 +49,10 @@
     <Compile Include="PagerQueryModel\MPagerInParam.cs" />
     <Compile Include="PagerQueryModel\MPagerReturn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlGenerator\MDataBaseDefine.cs" />
+    <Compile Include="SqlGenerator\MFieldDefine.cs" />
+    <Compile Include="MResult.cs" />
+    <Compile Include="SqlGenerator\MTableDefine.cs" />
     <Compile Include="UsermanageDB\MRoleInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

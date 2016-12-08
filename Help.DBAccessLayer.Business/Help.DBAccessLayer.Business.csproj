@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BDataBaseDesign.cs" />
+    <Compile Include="BGeneratorSQL.cs" />
     <Compile Include="BGetSchema.cs" />
+    <Compile Include="BGetTableDefineFromExcel.cs" />
     <Compile Include="BPagerQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

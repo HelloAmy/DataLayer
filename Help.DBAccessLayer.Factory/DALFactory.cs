@@ -45,5 +45,17 @@ namespace Help.DBAccessLayer.Factory
         {
             return new DExcelInfoDAL();
         }
+
+        public static IGenerator GetGeneratorSQLDAL(MDataBaseType type)
+        {
+            switch (type)
+            {
+                case MDataBaseType.MYSQL:
+                    return new DGeneratoDAO();
+
+                default:
+                    throw new Exception(string.Format("数据库类型:{0},并没有实现", type.ToString()));
+            }
+        }
     }
 }

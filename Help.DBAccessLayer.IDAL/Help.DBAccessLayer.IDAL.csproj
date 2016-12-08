@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IExcelInfo.cs" />
+    <Compile Include="IGenerator.cs" />
     <Compile Include="IGetSchema.cs" />
     <Compile Include="IPagerQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
