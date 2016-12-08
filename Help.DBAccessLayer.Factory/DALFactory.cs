@@ -2,6 +2,7 @@
 using Help.DBAccessLayer.IDAL;
 using Help.DBAccessLayer.Model;
 using Help.DBAccessLayer.MySQLDAL;
+using Help.DBAccessLayer.OleDbDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,11 @@ namespace Help.DBAccessLayer.Factory
             }
 
             throw new Exception(string.Format("未实现的IPagerQuery接口:数据库类型:{0}", dbtype.ToString()));
+        }
+
+        public static IExcelInfo GetExcelInfoDAL()
+        {
+            return new DExcelInfoDAL();
         }
     }
 }
