@@ -1,9 +1,11 @@
 ﻿using Help.DBAccessLayer.Factory;
 using Help.DBAccessLayer.Model;
+using Help.DBAccessLayer.Model.SqlGenerator;
 using IBM.Data.DB2;
 using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +41,20 @@ namespace Help.DBAccessLayer.Business
                 var dao = DALFactory.GetSchemaDAO(MDataBaseType.DB2, MDBAccessType.WRITE);
 
                 ret = dao.GetColumnList(conn, tableName);
+            }
+
+            return ret;
+        }
+
+        public MDataBaseDefine GenerateDataBaseDefine(string connstr)
+        {
+            MDataBaseDefine ret = null;
+            using (SqlConnection conn = new SqlConnection(connstr))
+            {
+                conn.Open();
+                var dao = DALFactory.GetSchemaDAO(MDataBaseType.SQLSERVER, MDBAccessType.READONLY);
+                ret = dao.GenerateDataBaseDefine(conn);
+
             }
 
             return ret;

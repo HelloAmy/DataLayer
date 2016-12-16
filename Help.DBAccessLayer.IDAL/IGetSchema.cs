@@ -1,4 +1,5 @@
 ﻿using Help.DBAccessLayer.Model;
+using Help.DBAccessLayer.Model.SqlGenerator;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,5 +14,7 @@ namespace Help.DBAccessLayer.IDAL
         List<MTableDesc> GetTableList(IDbConnection conn, string creater);
 
         List<MColumn> GetColumnList(IDbConnection conn, string tableName);
+
+        MDataBaseDefine GenerateDataBaseDefine(System.Data.IDbConnection conn);
     }
 }

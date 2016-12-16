@@ -73,6 +73,10 @@
       <Project>{887c5a51-ba04-4336-8dc0-2c7b74e9dc60}</Project>
       <Name>Help.DBAccessLayer.OleDbDAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Help.DBAccessLayer.SQLServer\Help.DBAccessLayer.SQLServer.csproj">
+      <Project>{4f9fa5d8-b240-4919-bc40-200934f64ef5}</Project>
+      <Name>Help.DBAccessLayer.SQLServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

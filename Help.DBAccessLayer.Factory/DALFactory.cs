@@ -19,6 +19,8 @@ namespace Help.DBAccessLayer.Factory
             {
                 case MDataBaseType.DB2:
                     return new DGetSchema();
+                case MDataBaseType.SQLSERVER:
+                    return new Help.DBAccessLayer.SQLServer.DGetSchema();
             }
 
             throw new Exception(string.Format("未实现的IGetSchema接口:数据库类型:{0},数据库访问类型:{1}", dbType.ToString(), accessType.ToString()));

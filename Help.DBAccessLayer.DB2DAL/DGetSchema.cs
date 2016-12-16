@@ -72,5 +72,9 @@ FROM sysibm.syscolumns where tbname ='{0}'", tableName);
             return ret;
         }
 
+        public Model.SqlGenerator.MDataBaseDefine GenerateDataBaseDefine(IDbConnection conn)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
