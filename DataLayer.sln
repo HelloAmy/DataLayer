@@ -27,6 +27,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Help.DBAccessLayer.OleDbDAL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Help.DBAccessLayer.SQLServer", "Help.DBAccessLayer.SQLServer\Help.DBAccessLayer.SQLServer.csproj", "{4F9FA5D8-B240-4919-BC40-200934F64EF5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Document", "Document", "{D0885080-B6A7-4668-B216-CEA7317E0ED4}"
+	ProjectSection(SolutionItems) = preProject
+		UserManagerDB.sql = UserManagerDB.sql
+		数据库定义查询.sql = 数据库定义查询.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
