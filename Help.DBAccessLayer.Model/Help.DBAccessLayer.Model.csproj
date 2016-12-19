@@ -53,6 +53,7 @@
     <Compile Include="SqlGenerator\MFieldDefine.cs" />
     <Compile Include="MResult.cs" />
     <Compile Include="SqlGenerator\MTableDefine.cs" />
+    <Compile Include="SqlGenerator\MTableIndex.cs" />
     <Compile Include="UsermanageDB\MRoleInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

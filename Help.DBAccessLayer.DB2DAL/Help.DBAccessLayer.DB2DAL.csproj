@@ -43,11 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBUtil.cs" />
     <Compile Include="DGetSchema.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Help.DBAccessLayer.DBUtil\Help.DBAccessLayer.Util.csproj">
+      <Project>{e14bb615-301b-4700-99af-08d3f37d1283}</Project>
+      <Name>Help.DBAccessLayer.Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Help.DBAccessLayer.IDAL\Help.DBAccessLayer.IDAL.csproj">
       <Project>{4833d0e7-5516-4793-bedc-836f2cce6589}</Project>
       <Name>Help.DBAccessLayer.IDAL</Name>

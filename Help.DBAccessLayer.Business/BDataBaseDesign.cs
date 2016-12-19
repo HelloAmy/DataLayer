@@ -21,7 +21,6 @@ namespace Help.DBAccessLayer.Business
 
             using (var objConn = ConnectionFactory.GetExcelOleDbConnection(strExcelPath))
             {
-
                 // 返回Excel的架构，包括各个sheet表的名称,类型，创建时间和修改时间等    
                 DataTable dtSheetName = ((OleDbConnection)objConn).GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "Table" });
 

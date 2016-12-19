@@ -54,7 +54,6 @@ namespace Help.DBAccessLayer.Business
                 conn.Open();
                 var dao = DALFactory.GetSchemaDAO(MDataBaseType.SQLSERVER, MDBAccessType.READONLY);
                 ret = dao.GenerateDataBaseDefine(conn);
-
             }
 
             return ret;

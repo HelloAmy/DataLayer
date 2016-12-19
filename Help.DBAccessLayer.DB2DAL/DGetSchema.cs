@@ -1,5 +1,6 @@
 ﻿using Help.DBAccessLayer.IDAL;
 using Help.DBAccessLayer.Model;
+using Help.DBAccessLayer.Util;
 using IBM.Data.DB2;
 using System;
 using System.Collections.Generic;

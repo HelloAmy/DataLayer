@@ -5,13 +5,13 @@ SELECT
     TableNameCH     = case when a.colorder=1 then isnull(f.value,'') else '' end,
     FieldIndex   = a.colorder,
     FieldName     = a.name,
-    IsIdentity       = case when COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 then '√'else '' end,
+    IsIdentity       = case when COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 then 'true'else 'false' end,
     IsPrimaryKey       = case when exists(SELECT 1 FROM sysobjects where xtype='PK' and parent_obj=a.id and name in (
-                     SELECT name FROM sysindexes WHERE indid in( SELECT indid FROM sysindexkeys WHERE id = a.id AND colid=a.colid))) then '√' else '' end,
+                     SELECT name FROM sysindexes WHERE indid in( SELECT indid FROM sysindexkeys WHERE id = a.id AND colid=a.colid))) then 'true' else 'false' end,
     DataType       = b.name,
     DataTypeLength       = COLUMNPROPERTY(a.id,a.name,'PRECISION'),
     DigitalLength   = isnull(COLUMNPROPERTY(a.id,a.name,'Scale'),0),
-    IsNullable     = case when a.isnullable=1 then '√'else '' end,
+    IsNullable     = case when a.isnullable=1 then 'true'else 'false' end,
     DefaultValue     = isnull(e.text,''),
     FieldNameCH   = isnull(g.[value],'')
 FROM 
@@ -37,7 +37,7 @@ sys.extended_properties f
 on 
     d.id=f.major_id and f.minor_id=0
 where 
-    d.name='C_Organization'    --如果只查询指定表,加上此红色where条件，tablename是要查询的表名；去除红色where条件查询说有的表信息
+    d.name='C_UserHistoricalPassword'    --如果只查询指定表,加上此红色where条件，tablename是要查询的表名；去除红色where条件查询说有的表信息
 order by 
     a.id,a.colorder;
 
@@ -49,7 +49,7 @@ SELECT
     TableName=O.Name,
     IndexId=ISNULL(KC.[object_id],IDX.index_id),
     IndexName=IDX.Name,
-    IndexType=KC.type_desc,
+    IndexType=ISNULL(KC.type_desc,''),
     Index_Column_id=IDXC.index_column_id,
     ColumnID=C.Column_id,
     ColumnName=C.Name,
@@ -75,5 +75,8 @@ FROM sys.indexes IDX
             AND O.type='U'
             AND O.is_ms_shipped=0
             AND IDXC.Column_id=C.Column_id
-WHERE IDX.is_primary_key<>1;
+WHERE IDX.is_primary_key<>1
+	 AND O.Name NOT LIKE 'sys%';
 
+
+ 

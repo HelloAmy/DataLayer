@@ -137,5 +137,7 @@ namespace Help.DBAccessLayer.Model.SqlGenerator
             get;
             set;
         }
+
+        public int DigitalLength { get; set; }
     }
 }
