@@ -61,6 +61,10 @@
       <Project>{739a4717-4144-49d6-aebe-cf7e428e548b}</Project>
       <Name>Help.DBAccessLayer.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Help.DBAccessLayer.NOPI\Help.DBAccessLayer.NOPI.csproj">
+      <Project>{7681ffb8-9922-4e4c-b76a-920829ffe141}</Project>
+      <Name>Help.DBAccessLayer.NOPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

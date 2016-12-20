@@ -36,14 +36,14 @@ left join
 sys.extended_properties f
 on 
     d.id=f.major_id and f.minor_id=0
-where 
-    d.name='C_UserHistoricalPassword'    --如果只查询指定表,加上此红色where条件，tablename是要查询的表名；去除红色where条件查询说有的表信息
+-- where d.name='C_UserHistoricalPassword'    --如果只查询指定表,加上此红色where条件，tablename是要查询的表名；去除红色where条件查询说有的表信息
 order by 
     a.id,a.colorder;
 
 -- 查询所有的表明
 SELECT name FROM SYSOBJECTS WHERE TYPE='U';
 
+-- 查询索引情况
 SELECT 
     TableId=O.[object_id],
     TableName=O.Name,
@@ -56,7 +56,7 @@ SELECT
     Sort=CASE INDEXKEY_PROPERTY(IDXC.[object_id],IDXC.index_id,IDXC.index_column_id,'IsDescending')
         WHEN 1 THEN 'DESC' WHEN 0 THEN 'ASC' ELSE '' END,
     PrimaryKey=IDX.is_primary_key,
-    [UQIQUE]=IDX.is_unique,
+    IsUnique=IDX.is_unique,
     Ignore_dup_key=IDX.ignore_dup_key,
     Disabled=IDX.is_disabled,
     Fill_factor=IDX.fill_factor,
