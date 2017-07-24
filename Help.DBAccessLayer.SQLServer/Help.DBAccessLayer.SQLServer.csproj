@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Help.DBAccessLayer.DBUtil\Help.DBAccessLayer.Util.csproj">
-      <Project>{e14bb615-301b-4700-99af-08d3f37d1283}</Project>
-      <Name>Help.DBAccessLayer.Util</Name>
+    <ProjectReference Include="..\Help.DBAccessLayer.DBUtil\Help.DBAccessLayer.DBUtil.csproj">
+      <Project>{c62df0da-8950-4b92-a94e-964dbf8f75ea}</Project>
+      <Name>Help.DBAccessLayer.DBUtil</Name>
     </ProjectReference>
     <ProjectReference Include="..\Help.DBAccessLayer.IDAL\Help.DBAccessLayer.IDAL.csproj">
       <Project>{4833d0e7-5516-4793-bedc-836f2cce6589}</Project>

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PricewaterhouseCoopers")]
 [assembly: AssemblyProduct("Help.DBAccessLayer.DBUtil")]
-[assembly: AssemblyCopyright("Copyright © PricewaterhouseCoopers 2016")]
+[assembly: AssemblyCopyright("Copyright © PricewaterhouseCoopers 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e160c955-4ed6-49b8-ab6e-02f3a221fd12")]
+[assembly: Guid("01e62f8e-0e11-4b3b-a740-30d7aeddb58e")]
 
 // Version information for an assembly consists of the following four values:
 //
