@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MainTest
 {
@@ -15,8 +16,38 @@ namespace MainTest
     {
         static void Main(string[] args)
         {
+            DGenerateDatabaseExcel bll = new DGenerateDatabaseExcel();
 
-            TestExcel();
+            //bll.splitSheets();
+            //bll.SplitSheetsXls();
+            //bll.SplitSheetsXls("./documents/万能模板.xls", "./documents/");
+            //bll.SplitSheets("./documents/权限UI.xlsx", "./documents/");
+            //TestExcel();
+        }
+
+
+        public void SplitSheets()
+        {
+            Excel.Application app = new Excel.Application();
+
+            Excel.Workbook workbook1 = app.Workbooks._Open("./documents/万能模板.xls", Type.Missing, Type.Missing, Type.Missing, Type.Missing
+                , Type.Missing, Type.Missing, Type.Missing, Type.Missing
+                , Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+            foreach (var sheet in workbook1.Sheets)
+            {
+                string name = "./documents/万能模板" + Guid.NewGuid().ToString() + ".xls";
+                Excel.Workbook workbook2 = app.Workbooks.Open(name, Type.Missing, Type.Missing, Type.Missing, Type.Missing
+               , Type.Missing, Type.Missing, Type.Missing, Type.Missing
+               , Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+                //Excel.Workbook workbook2 = new Excel.Workbook();
+                //workbook2.Worksheets
+            }
+
+
+
+            Excel.Worksheet sheet1 = workbook1.Worksheets["Sheet1"] as Excel.Worksheet;
         }
 
         private static void TestJsonSerializeObject()
@@ -30,6 +61,9 @@ namespace MainTest
 
             string json = JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
+
+
+
 
         private static void TestExcel()
         {

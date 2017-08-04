@@ -1,7 +1,9 @@
 ﻿using Help.DBAccessLayer.Model.SqlGenerator;
+using Help.DBAccessLayer.Util;
 using NPOI.HSSF.UserModel;
 using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +36,140 @@ namespace Help.DBAccessLayer.NOPI
                 //最后记得关闭对象
                 workbook.Close();
             }
+        }
+
+        public void SplitSheetXlsx(string fileName, string excelPrefixName)
+        {
+            XSSFWorkbook workbook = null;
+
+            using (FileStream stream = File.OpenRead(fileName))
+            {
+                workbook = new XSSFWorkbook(stream);
+            }
+
+            int sheetCount = workbook.Count;
+            for (int i = 0; i < sheetCount; i++)
+            {
+                using (FileStream stream = File.OpenRead(fileName))
+                {
+                    workbook = new XSSFWorkbook(stream);
+                }
+
+                var sheet = workbook.GetSheetAt(i);
+
+                // 设置为第一个sheet
+                workbook.SetSheetOrder(sheet.SheetName, 0);
+
+                // 删除第一个sheet之后的sheet
+                while (workbook.Count > 1)
+                {
+                    workbook.RemoveSheetAt(1);
+                }
+
+                string name = excelPrefixName + sheet.SheetName + ".xlsx";
+                using (FileStream fs = new FileStream(name, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    workbook.Write(fs);
+                    fs.Close();
+                }
+            }
+        }
+
+        public void SplitSheetsXls(string fileName, string excelPrefixName)
+        {
+            HSSFWorkbook workbook = null;
+
+            using (FileStream stream = File.OpenRead(fileName))
+            {
+                workbook = new HSSFWorkbook(stream);
+            }
+
+            for (int i = 0; i < workbook.Count; i++)
+            {
+                HSSFSheet sheet = workbook.GetSheetAt(i) as HSSFSheet;
+
+                HSSFWorkbook copy = new HSSFWorkbook();
+
+                sheet.CopyTo(copy, sheet.SheetName, true, true);
+
+                string name = excelPrefixName + sheet.SheetName + ".xls";
+                using (FileStream fs = new FileStream(name, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    copy.Write(fs);
+                    fs.Close();
+                }
+            }
+
+        }
+
+        public bool SplitSheetsToSingleExcel(string fileName, string excelPrefixName)
+        {
+            bool ret = false;
+            try
+            {
+                var result = Path.GetExtension(fileName);
+
+                if (result == ".xlsx")
+                {
+                    this.SplitSheetXlsx(fileName, excelPrefixName);
+                    ret = true;
+                }
+                else if (result == ".xls")
+                {
+                    this.SplitSheetsXls(fileName, excelPrefixName);
+                    ret = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return ret;
+        }
+
+        public void splitSheets()
+        {
+            // XSSFWorkbook xlsx
+
+            // HSSFWorkbook xls
+
+            HSSFSheet cs = null;
+            //cs.CopyTo();
+            string fileName = "./documents/万能模板.xls";
+            HSSFWorkbook workbook;
+            using (FileStream stream = File.OpenRead(fileName))
+            {
+                workbook = new HSSFWorkbook(stream);
+            }
+
+            //XSSFSheet
+            HSSFSheet sheet = workbook.GetSheetAt(0) as HSSFSheet;  //获取名称是“菜鸟”的表。
+
+            HSSFWorkbook copy = new HSSFWorkbook();
+            //ISheet copySheet = sheet.CopySheet(sheet.SheetName, true);
+
+            sheet.CopyTo(copy, "sheet0", true, true);
+            //List<ISheet> copyList = new List<ISheet>();
+            //copyList.Add(copySheet);
+
+
+            //for (int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
+            //{
+            //    for (int j = sheet.GetRow(i).FirstCellNum; j <= sheet.GetRow(i).LastCellNum; j++)
+            //    {
+            //        // value.CellStyle.IsLocked 是否被锁定
+            //        var value = sheet.GetRow(i).GetCell(j);
+            //    }
+            //}
+
+            string copyFile = "./documents/万能模板" + Guid.NewGuid().ToString() + ".xls";
+            using (FileStream fs = new FileStream(copyFile, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
+            {
+                copy.Write(fs);
+                fs.Close();
+            }
+
         }
 
         private void SetFirstPageWorkSheet(IWorkbook workbook, MDataBaseDefine database)

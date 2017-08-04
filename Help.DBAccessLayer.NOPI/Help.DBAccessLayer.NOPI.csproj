@@ -67,6 +67,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Help.DBAccessLayer.DBUtil\Help.DBAccessLayer.DBUtil.csproj">
+      <Project>{c62df0da-8950-4b92-a94e-964dbf8f75ea}</Project>
+      <Name>Help.DBAccessLayer.DBUtil</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Help.DBAccessLayer.IDAL\Help.DBAccessLayer.IDAL.csproj">
       <Project>{4833d0e7-5516-4793-bedc-836f2cce6589}</Project>
       <Name>Help.DBAccessLayer.IDAL</Name>
