@@ -89,10 +89,13 @@ namespace Help.DBAccessLayer.NOPI
                 HSSFSheet sheet = workbook.GetSheetAt(i) as HSSFSheet;
 
                 HSSFWorkbook copy = new HSSFWorkbook();
+                
 
                 sheet.CopyTo(copy, sheet.SheetName, true, true);
 
-                string name = excelPrefixName + sheet.SheetName + ".xls";
+                copy.SetActiveSheet(0);
+
+                string name = excelPrefixName + sheet.SheetName + ".xlsx";
                 using (FileStream fs = new FileStream(name, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
                 {
                     copy.Write(fs);
@@ -128,6 +131,55 @@ namespace Help.DBAccessLayer.NOPI
             return ret;
         }
 
+        public void ReadXlsx()
+        {
+            XSSFWorkbook workbook = null;
+            string fileName = @"C:\Julius_J_Zhu\09DataLayer\MainTest\documents\WP03.xlsx";
+            using (FileStream stream = File.OpenRead(fileName))
+            {
+                workbook = new XSSFWorkbook(stream);
+            }
+
+            //XSSFSheet
+            XSSFSheet sheet = workbook.GetSheetAt(0) as XSSFSheet;  //获取名称是“菜鸟”的表。
+
+            List<ICell> updateList = new List<ICell>();
+
+            List<string> formulaList = new List<string>();
+
+            for (int row = sheet.FirstRowNum; row <= sheet.LastRowNum; row++)
+            {
+                var rowData = sheet.GetRow(row);
+                for (int colomn = rowData.FirstCellNum; colomn <= rowData.LastCellNum; colomn++)
+                {
+                    var value = rowData.GetCell(colomn);
+
+                    if (value != null && !value.CellStyle.IsLocked)
+                    {
+                        updateList.Add(value);
+                    }
+
+                    if (value != null && value.CellType == CellType.Formula)
+                    {
+                        formulaList.Add(value.CellFormula + "," + value.CellStyle.IsLocked);
+                    }
+                }
+            }
+
+            foreach (var item in updateList)
+            {
+                item.CellStyle.IsLocked = true;
+                item.SetCellType(CellType.Blank);
+            }
+
+            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Write))
+            {
+                workbook.Write(fs);
+                fs.Close();
+            }
+
+        }
+
         public void splitSheets()
         {
             // XSSFWorkbook xlsx
@@ -136,7 +188,7 @@ namespace Help.DBAccessLayer.NOPI
 
             HSSFSheet cs = null;
             //cs.CopyTo();
-            string fileName = "./documents/万能模板.xls";
+            string fileName = "./documents/WP03.xlsx";
             HSSFWorkbook workbook;
             using (FileStream stream = File.OpenRead(fileName))
             {
@@ -154,14 +206,19 @@ namespace Help.DBAccessLayer.NOPI
             //copyList.Add(copySheet);
 
 
-            //for (int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
-            //{
-            //    for (int j = sheet.GetRow(i).FirstCellNum; j <= sheet.GetRow(i).LastCellNum; j++)
-            //    {
-            //        // value.CellStyle.IsLocked 是否被锁定
-            //        var value = sheet.GetRow(i).GetCell(j);
-            //    }
-            //}
+            for (int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
+            {
+                for (int j = sheet.GetRow(i).FirstCellNum; j <= sheet.GetRow(i).LastCellNum; j++)
+                {
+                    // value.CellStyle.IsLocked 是否被锁定
+                    var value = sheet.GetRow(i).GetCell(j);
+
+                    if (value.CellType == CellType.Formula)
+                    {
+                        bool isLock = value.CellStyle.IsLocked;
+                    }
+                }
+            }
 
             string copyFile = "./documents/万能模板" + Guid.NewGuid().ToString() + ".xls";
             using (FileStream fs = new FileStream(copyFile, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))

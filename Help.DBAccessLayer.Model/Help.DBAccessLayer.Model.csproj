@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataImportModel.cs" />
     <Compile Include="MColumn.cs" />
     <Compile Include="MDataBaseType.cs" />
     <Compile Include="MDBAccessType.cs" />

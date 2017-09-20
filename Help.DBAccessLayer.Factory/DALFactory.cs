@@ -2,6 +2,8 @@
 using Help.DBAccessLayer.IDAL;
 using Help.DBAccessLayer.Model;
 using Help.DBAccessLayer.MySQLDAL;
+
+using SQLServer = Help.DBAccessLayer.SQLServer;
 using Help.DBAccessLayer.OleDbDAL;
 using System;
 using System.Collections.Generic;
@@ -54,6 +56,8 @@ namespace Help.DBAccessLayer.Factory
             {
                 case MDataBaseType.MYSQL:
                     return new DGeneratoDAO();
+                case MDataBaseType.SQLSERVER:
+                    return new SQLServer.DGenerator();
 
                 default:
                     throw new Exception(string.Format("数据库类型:{0},并没有实现", type.ToString()));

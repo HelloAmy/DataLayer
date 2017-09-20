@@ -50,10 +50,22 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestModel\OutputInvoiceImportShipmentDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="documents\ShipmentList.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="documents\WP00000000000003_存货跌价准备00000000.xlsx" />
+    <None Include="documents\WP00000000000003_存货跌价准备0000000067f286b4-deac-4478-8f6a-661b1f93add2.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="documents\WP03.xlsx" />
     <None Include="documents\万能模板.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="documents\佣金.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="documents\权限UI.xlsx">
