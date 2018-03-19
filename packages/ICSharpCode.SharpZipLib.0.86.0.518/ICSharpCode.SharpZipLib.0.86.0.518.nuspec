@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ICSharpCode.SharpZipLib</id>
+    <version>0.86.0.518</version>
+    <title>ICSharpCode.SharpZipLib</title>
+    <authors>hawk</authors>
+    <owners>hawk</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/icsharpcode/SharpZipLib</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ICSharpCode.SharpZipLib</description>
+    <summary />
+  </metadata>
+</package>

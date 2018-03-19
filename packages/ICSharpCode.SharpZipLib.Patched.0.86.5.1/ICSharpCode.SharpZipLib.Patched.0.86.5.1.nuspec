@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ICSharpCode.SharpZipLib.Patched</id>
+    <version>0.86.5.1</version>
+    <title>ICSharpCode.SharpZipLib.Patched</title>
+    <authors>SharpDevelop</authors>
+    <owners>SharpDevelop</owners>
+    <projectUrl>https://icsharpcode.github.io/SharpZipLib/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A version of SharpZipLib with custom patches applied.</description>
+    <summary />
+    <dependencies>
+      <group targetFramework=".NETFramework2.0" />
+      <group targetFramework="Unsupported0.0">
+        <dependency id="System.Text.Encoding.CodePages" version="4.4.0" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

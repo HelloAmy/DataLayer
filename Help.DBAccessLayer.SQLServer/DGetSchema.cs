@@ -46,21 +46,25 @@ namespace Help.DBAccessLayer.SQLServer
                         select new { g.Key };
             foreach (var g in group)
             {
-                var indexs = indexList.FindAll(sa => sa.TableName == g.Key.TableName);
-                var columns = database.TableList.Find(sa => sa.TableName == g.Key.TableName).FieldList;
-
-                indexs.ForEach(sa =>
+                var tableFind = database.TableList.Find(sa => sa.TableName == g.Key.TableName);
+                if (tableFind != null)
                 {
-                    var column = columns.Find(p => p.FieldName == sa.ColumnName);
-                    if (sa.IsUnique)
+                    var columns = tableFind.FieldList;
+                    var indexs = indexList.FindAll(sa => sa.TableName == g.Key.TableName);
+
+                    indexs.ForEach(sa =>
                     {
-                        column.IsUniqueIndex = true;
-                    }
-                    else
-                    {
-                        column.IndexNo = columns.Max(q => q.IndexNo) + 1;
-                    }
-                });
+                        var column = columns.Find(p => p.FieldName == sa.ColumnName);
+                        if (sa.IsUnique)
+                        {
+                            column.IsUniqueIndex = true;
+                        }
+                        else
+                        {
+                            column.IndexNo = columns.Max(q => q.IndexNo) + 1;
+                        }
+                    });
+                }
             }
 
             return database;
@@ -68,7 +72,7 @@ namespace Help.DBAccessLayer.SQLServer
 
         private List<string> GetTableNameList(System.Data.IDbConnection conn)
         {
-            string queryTableListSql = "SELECT name FROM SYSOBJECTS WHERE TYPE='U';";
+            string queryTableListSql = "SELECT name FROM SYSOBJECTS WHERE TYPE='U' and category=32 order by name;";
             SqlCommand comm = new SqlCommand(queryTableListSql, (SqlConnection)conn);
             SqlDataReader reader = comm.ExecuteReader();
 
@@ -147,6 +151,8 @@ order by
                 {
                     field.PrimaryKeyIndex = maxPrimaryKeyIndex + 1;
                 }
+
+                field.IsPrimaryKey = IsPrimaryKey;
 
                 field.DataType = DBUtil.GetDBValueStr(reader, "DataType", string.Empty);
                 field.Length = DBUtil.GetDBValueInt(reader, "DataTypeLength", 0);

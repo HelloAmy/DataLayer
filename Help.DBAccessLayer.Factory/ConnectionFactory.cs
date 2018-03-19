@@ -25,6 +25,8 @@ namespace Help.DBAccessLayer.Factory
             return ConfigurationManager.ConnectionStrings[dbname].ToString();
         }
 
+        
+
         public static IDbConnection GetDbConn(string dbname, MDataBaseType type)
         {
             IDbConnection conn = null;

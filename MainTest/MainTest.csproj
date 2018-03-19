@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,15 +33,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus">
+      <HintPath>..\packages\EPPlus.4.5.0.2-rc\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\ICSharpCode.SharpZipLib.0.86.0.518\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="InternationalNumericFormatter">
+      <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio International Feature Pack 2.0\NumericConversion\InternationalNumericFormatter.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,27 +67,15 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestModel\GenerateWordDBDesign.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TestModel\OutputInvoiceIssuedRecord.cs" />
+    <Compile Include="TestModel\TExcel.cs" />
     <Compile Include="TestModel\OutputInvoiceImportShipmentDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="documents\ShipmentList.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="documents\WP00000000000003_存货跌价准备00000000.xlsx" />
-    <None Include="documents\WP00000000000003_存货跌价准备0000000067f286b4-deac-4478-8f6a-661b1f93add2.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="documents\WP03.xlsx" />
-    <None Include="documents\万能模板.xls">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="documents\佣金.xls">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="documents\权限UI.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -78,16 +83,30 @@
       <Project>{251d9501-872b-428d-b815-da756a43a087}</Project>
       <Name>Help.DBAccessLayer.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Help.DBAccessLayer.Factory\Help.DBAccessLayer.Factory.csproj">
+      <Project>{56070205-2b64-40ba-8bac-06147c6b8d7c}</Project>
+      <Name>Help.DBAccessLayer.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Help.DBAccessLayer.IDAL\Help.DBAccessLayer.IDAL.csproj">
+      <Project>{4833d0e7-5516-4793-bedc-836f2cce6589}</Project>
+      <Name>Help.DBAccessLayer.IDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Help.DBAccessLayer.Model\Help.DBAccessLayer.Model.csproj">
       <Project>{739a4717-4144-49d6-aebe-cf7e428e548b}</Project>
       <Name>Help.DBAccessLayer.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Help.DBAccessLayer.NOPI\Help.DBAccessLayer.NOPI.csproj">
-      <Project>{7681ffb8-9922-4e4c-b76a-920829ffe141}</Project>
-      <Name>Help.DBAccessLayer.NOPI</Name>
+    <ProjectReference Include="..\Help.DBAccessLayer.NPOIDAL\Help.DBAccessLayer.NPOIDAL.csproj">
+      <Project>{5ac586b2-9d5a-4b21-8a9e-4701fa55a608}</Project>
+      <Name>Help.DBAccessLayer.NPOIDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Help.DBAccessLayer.OleDbDAL\Help.DBAccessLayer.OleDbDAL.csproj">
+      <Project>{887c5a51-ba04-4336-8dc0-2c7b74e9dc60}</Project>
+      <Name>Help.DBAccessLayer.OleDbDAL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="documents\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

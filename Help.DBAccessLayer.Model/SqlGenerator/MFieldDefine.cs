@@ -139,5 +139,14 @@ namespace Help.DBAccessLayer.Model.SqlGenerator
         }
 
         public int DigitalLength { get; set; }
+
+        /// <summary>
+        /// 是否为主键，联合主键可能会有问题
+        /// </summary>
+        public bool IsPrimaryKey
+        {
+            get;
+            set;
+        }
     }
 }
