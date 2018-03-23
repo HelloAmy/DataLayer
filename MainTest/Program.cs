@@ -32,12 +32,32 @@ namespace MainTest
 
         static void Main(string[] args)
         {
-            new GenerateWordDBDesign().getDBInfo();
-
+            GetDBDesign();
             Console.WriteLine("结束");
             Console.Read();
-
             //new TExcel().ReadVoucherDataEEplus();
+        }
+
+
+        private static void TestShowDecimal()
+        {
+            decimal result = 0.17M * 100;
+            decimal result2 = 0.175M * 100;
+            Console.WriteLine(GetPercent(result));
+            Console.WriteLine(GetPercent(result2));
+            Console.WriteLine(GetPercent(111111.1700032M));
+        }
+
+        private static string GetPercent(decimal result)
+        {
+            string ret = string.Format("{0:0.##}", result) + "%";
+            return ret;
+        }
+
+
+        private static void GetDBDesign()
+        {
+            new GenerateWordDBDesign().Generate();
         }
 
         public static void teslaHistoryInvoiceimport()
@@ -95,7 +115,7 @@ namespace MainTest
             double vt = Math.Pow(10, digit);
             //1.乘以倍数 + 0.5
             decimal vx = value * (decimal)vt + 0.5M;
-            //2.向下取整
+            //2.向下取整 
             decimal temp = Math.Floor(vx);
             //3.再除以倍数
             return (temp / (decimal)vt);
@@ -163,158 +183,6 @@ namespace MainTest
             Console.Read();
         }
 
-        public void TestConnection()
-        {
-            X509Store store = new X509Store(StoreName.My);
-            store.Open(OpenFlags.ReadWrite);
-
-            X509Certificate2Collection certs = store.Certificates.Find(X509FindType.FindBySubjectName, "MyServer", false); // vaildOnly = true时搜索无结果。
-            if (certs.Count == 0) return;
-            serverCertificate = certs[0];
-            RunServer();
-            store.Close(); // 关闭存储区。
-        }
-
-        public static void RunServer()
-        {
-            //serverCertificate = X509Certificate.CreateFromSignedFile(@"C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\samool.pvk");
-            TcpListener listener = new TcpListener(IPAddress.Parse("192.168.20.139"), 901);
-            listener.Start();
-            while (true)
-            {
-                try
-                {
-                    Console.WriteLine("Waiting for a client to connect...");
-                    TcpClient client = listener.AcceptTcpClient();
-                    ProcessClient(client);
-                }
-                catch
-                {
-
-                }
-            }
-        }
-
-        static void ProcessClient(TcpClient client)
-        {
-            SslStream sslStream = new SslStream(client.GetStream(), false);
-            try
-            {
-                sslStream.AuthenticateAsServer(serverCertificate, false, SslProtocols.Tls, true);
-                DisplaySecurityLevel(sslStream);
-                DisplaySecurityServices(sslStream);
-                DisplayCertificateInformation(sslStream);
-                DisplayStreamProperties(sslStream);
-
-                sslStream.ReadTimeout = 5000;
-                sslStream.WriteTimeout = 5000;
-                Console.WriteLine("Waiting for client message...");
-                string messageData = ReadMessage(sslStream);
-                Console.WriteLine("Received: {0}", messageData);
-                byte[] message = Encoding.UTF8.GetBytes("Hello from the server.");
-                Console.WriteLine("Sending hello message.");
-                sslStream.Write(message);
-            }
-            catch (AuthenticationException e)
-            {
-                Console.WriteLine("Exception: {0}", e.Message);
-                if (e.InnerException != null)
-                {
-                    Console.WriteLine("Inner exception: {0}", e.InnerException.Message);
-                }
-                Console.WriteLine("Authentication failed - closing the connection.");
-                sslStream.Close();
-                client.Close();
-                return;
-            }
-            finally
-            {
-                sslStream.Close();
-                client.Close();
-            }
-        }
-
-        static string ReadMessage(SslStream sslStream)
-        {
-            byte[] buffer = new byte[2048];
-            StringBuilder messageData = new StringBuilder();
-            int bytes = -1;
-            do
-            {
-                bytes = sslStream.Read(buffer, 0, buffer.Length);
-                Decoder decoder = Encoding.UTF8.GetDecoder();
-                char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
-                decoder.GetChars(buffer, 0, bytes, chars, 0);
-                messageData.Append(chars);
-                if (messageData.ToString().IndexOf("") != -1)
-                {
-                    break;
-                }
-            }
-            while (bytes != 0);
-
-            return messageData.ToString();
-        }
-
-        static void DisplaySecurityLevel(SslStream stream)
-        {
-            Console.WriteLine("Cipher: {0} strength {1}", stream.CipherAlgorithm, stream.CipherStrength);
-            Console.WriteLine("Hash: {0} strength {1}", stream.HashAlgorithm, stream.HashStrength);
-            Console.WriteLine("Key exchange: {0} strength {1}", stream.KeyExchangeAlgorithm, stream.KeyExchangeStrength);
-            Console.WriteLine("Protocol: {0}", stream.SslProtocol);
-        }
-
-        static void DisplaySecurityServices(SslStream stream)
-        {
-            Console.WriteLine("Is authenticated: {0} as server? {1}", stream.IsAuthenticated, stream.IsServer);
-            Console.WriteLine("IsSigned: {0}", stream.IsSigned);
-            Console.WriteLine("Is Encrypted: {0}", stream.IsEncrypted);
-        }
-
-        static void DisplayStreamProperties(SslStream stream)
-        {
-            Console.WriteLine("Can read: {0}, write {1}", stream.CanRead, stream.CanWrite);
-            Console.WriteLine("Can timeout: {0}", stream.CanTimeout);
-        }
-
-        static void DisplayCertificateInformation(SslStream stream)
-        {
-            Console.WriteLine("Certificate revocation list checked: {0}", stream.CheckCertRevocationStatus);
-
-            X509Certificate localCertificate = stream.LocalCertificate;
-            if (stream.LocalCertificate != null)
-            {
-                Console.WriteLine("Local cert was issued to {0} and is valid from {1} until {2}.",
-                localCertificate.Subject,
-                    localCertificate.GetEffectiveDateString(),
-                    localCertificate.GetExpirationDateString());
-            }
-            else
-            {
-                Console.WriteLine("Local certificate is null.");
-            }
-            X509Certificate remoteCertificate = stream.RemoteCertificate;
-            if (stream.RemoteCertificate != null)
-            {
-                Console.WriteLine("Remote cert was issued to {0} and is valid from {1} until {2}.",
-                    remoteCertificate.Subject,
-                    remoteCertificate.GetEffectiveDateString(),
-                    remoteCertificate.GetExpirationDateString());
-            }
-            else
-            {
-                Console.WriteLine("Remote certificate is null.");
-            }
-        }
-
-        private static void DisplayUsage()
-        {
-            Console.WriteLine("To start the server specify:");
-            Console.WriteLine("serverSync certificateFile.cer");
-            //Environment.Exit(1);
-        }
-
-
         private int _columnIndex = -1;
         private void ResetColumnIndex()
         {
@@ -361,30 +229,6 @@ namespace MainTest
             }
         }
 
-        public void SplitSheets()
-        {
-            Excel.Application app = new Excel.Application();
-
-            Excel.Workbook workbook1 = app.Workbooks._Open("./documents/万能模板.xls", Type.Missing, Type.Missing, Type.Missing, Type.Missing
-                , Type.Missing, Type.Missing, Type.Missing, Type.Missing
-                , Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-
-            foreach (var sheet in workbook1.Sheets)
-            {
-                string name = "./documents/万能模板" + Guid.NewGuid().ToString() + ".xls";
-                Excel.Workbook workbook2 = app.Workbooks.Open(name, Type.Missing, Type.Missing, Type.Missing, Type.Missing
-               , Type.Missing, Type.Missing, Type.Missing, Type.Missing
-               , Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-
-                //Excel.Workbook workbook2 = new Excel.Workbook();
-                //workbook2.Worksheets
-            }
-
-
-
-            Excel.Worksheet sheet1 = workbook1.Worksheets["Sheet1"] as Excel.Worksheet;
-        }
-
         private static void TestJsonSerializeObject()
         {
             MTest model = new MTest()
@@ -396,8 +240,6 @@ namespace MainTest
 
             string json = JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
-
-
 
 
         private static void TestExcel()

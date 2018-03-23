@@ -30,7 +30,7 @@ namespace Help.DBAccessLayer.DB2DAL
             {
                 while (reader.Read())
                 {
-                    MTableDesc model = new MTableDesc();
+                    MTableDesc model = new MTableDesc(); 
                     model.TableName = reader["NAME"] == DBNull.Value ? string.Empty : reader["NAME"].ToString();
                     model.Creator = reader["CREATOR"] == DBNull.Value ? string.Empty : reader["CREATOR"].ToString();
                     model.CreateDateTime = reader["CTIME"] == DBNull.Value ? DateTime.Parse("1990-01-01") : Convert.ToDateTime(reader["CTIME"].ToString());

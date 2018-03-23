@@ -72,7 +72,7 @@ namespace Help.DBAccessLayer.SQLServer
 
         private List<string> GetTableNameList(System.Data.IDbConnection conn)
         {
-            string queryTableListSql = "SELECT name FROM SYSOBJECTS WHERE TYPE='U' and category=32 order by name;";
+            string queryTableListSql = "SELECT name FROM SYSOBJECTS WHERE TYPE='U' and category=0 order by name;";
             SqlCommand comm = new SqlCommand(queryTableListSql, (SqlConnection)conn);
             SqlDataReader reader = comm.ExecuteReader();
 
