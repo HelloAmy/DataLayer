@@ -1,6 +1,6 @@
 ﻿namespace SyncDataToolMain
 {
-    partial class Form1
+    partial class readFileData
     {
         /// <summary>
         /// Required designer variable.
@@ -28,57 +28,95 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.数据库同步ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.纯数据同步ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
+            this.BWEncrypt = new System.Windows.Forms.Button();
+            this.BWDecrypt = new System.Windows.Forms.Button();
+            this.resultText = new System.Windows.Forms.RichTextBox();
+            this.inputText = new System.Windows.Forms.RichTextBox();
+            this.btn_DesLog = new System.Windows.Forms.Button();
+            this.btn_desDecrypt = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // BWEncrypt
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.数据库同步ToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(597, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.BWEncrypt.Location = new System.Drawing.Point(780, 39);
+            this.BWEncrypt.Name = "BWEncrypt";
+            this.BWEncrypt.Size = new System.Drawing.Size(75, 23);
+            this.BWEncrypt.TabIndex = 3;
+            this.BWEncrypt.Text = "加密";
+            this.BWEncrypt.UseVisualStyleBackColor = true;
+            this.BWEncrypt.Click += new System.EventHandler(this.BWEncrypt_Click);
             // 
-            // 数据库同步ToolStripMenuItem
+            // BWDecrypt
             // 
-            this.数据库同步ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.纯数据同步ToolStripMenuItem});
-            this.数据库同步ToolStripMenuItem.Name = "数据库同步ToolStripMenuItem";
-            this.数据库同步ToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
-            this.数据库同步ToolStripMenuItem.Text = "数据库同步";
+            this.BWDecrypt.Location = new System.Drawing.Point(780, 110);
+            this.BWDecrypt.Name = "BWDecrypt";
+            this.BWDecrypt.Size = new System.Drawing.Size(75, 23);
+            this.BWDecrypt.TabIndex = 4;
+            this.BWDecrypt.Text = "解密";
+            this.BWDecrypt.UseVisualStyleBackColor = true;
+            this.BWDecrypt.Click += new System.EventHandler(this.BWDecrypt_Click);
             // 
-            // 纯数据同步ToolStripMenuItem
+            // resultText
             // 
-            this.纯数据同步ToolStripMenuItem.Name = "纯数据同步ToolStripMenuItem";
-            this.纯数据同步ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.纯数据同步ToolStripMenuItem.Text = "纯数据同步";
+            this.resultText.Location = new System.Drawing.Point(33, 139);
+            this.resultText.Name = "resultText";
+            this.resultText.Size = new System.Drawing.Size(741, 338);
+            this.resultText.TabIndex = 5;
+            this.resultText.Text = "";
             // 
-            // Form1
+            // inputText
+            // 
+            this.inputText.Location = new System.Drawing.Point(33, 12);
+            this.inputText.Name = "inputText";
+            this.inputText.Size = new System.Drawing.Size(741, 108);
+            this.inputText.TabIndex = 6;
+            this.inputText.Text = "";
+            // 
+            // btn_DesLog
+            // 
+            this.btn_DesLog.Location = new System.Drawing.Point(781, 170);
+            this.btn_DesLog.Name = "btn_DesLog";
+            this.btn_DesLog.Size = new System.Drawing.Size(75, 23);
+            this.btn_DesLog.TabIndex = 7;
+            this.btn_DesLog.Text = "解密日志文件";
+            this.btn_DesLog.UseVisualStyleBackColor = true;
+            this.btn_DesLog.Click += new System.EventHandler(this.btn_DesLog_Click);
+            // 
+            // btn_desDecrypt
+            // 
+            this.btn_desDecrypt.Location = new System.Drawing.Point(781, 223);
+            this.btn_desDecrypt.Name = "btn_desDecrypt";
+            this.btn_desDecrypt.Size = new System.Drawing.Size(75, 23);
+            this.btn_desDecrypt.TabIndex = 8;
+            this.btn_desDecrypt.Text = "输入解密";
+            this.btn_desDecrypt.UseVisualStyleBackColor = true;
+            this.btn_desDecrypt.Click += new System.EventHandler(this.btn_desDecrypt_Click);
+            // 
+            // readFileData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(597, 341);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.ClientSize = new System.Drawing.Size(877, 489);
+            this.Controls.Add(this.btn_desDecrypt);
+            this.Controls.Add(this.btn_DesLog);
+            this.Controls.Add(this.inputText);
+            this.Controls.Add(this.resultText);
+            this.Controls.Add(this.BWDecrypt);
+            this.Controls.Add(this.BWEncrypt);
+            this.Name = "readFileData";
             this.Text = "Form1";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 数据库同步ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 纯数据同步ToolStripMenuItem;
+        private System.Windows.Forms.Button BWEncrypt;
+        private System.Windows.Forms.Button BWDecrypt;
+        private System.Windows.Forms.RichTextBox resultText;
+        private System.Windows.Forms.RichTextBox inputText;
+        private System.Windows.Forms.Button btn_DesLog;
+        private System.Windows.Forms.Button btn_desDecrypt;
     }
 }
 

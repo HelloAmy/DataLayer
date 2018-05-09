@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="gb2312"?>
+<business comment="页边距设置" id="YBJSZ">
+<body yylxdm="1">
+<output>
+<fplxdm>005</fplxdm>
+<returncode>00000000</returncode>
+<returnmsg>成功</returnmsg>
+</output>
+</body>
+</business>

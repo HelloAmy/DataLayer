@@ -17,6 +17,8 @@ namespace Help.DBAccessLayer.NPOIDAL
         {
             List<List<string>> retData = new List<List<string>>();
             IWorkbook workbook = WorkbookFactory.Create(ExcelFileStream);
+
+            int count = workbook.NumberOfSheets;
             var sheet = workbook.GetSheetAt(SheetIndex);
 
             try

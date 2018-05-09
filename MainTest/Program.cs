@@ -23,21 +23,167 @@ using System.Data;
 using System.Data.OleDb;
 using Help.DBAccessLayer.Factory;
 using Help.DBAccessLayer.IDAL;
+using System.Xml.Linq;
+using System.Xml;
+using MainTest.RedLetterQuery;
+
 
 namespace MainTest
 {
+    public enum HelpStaus
+    {
+        Yes = 1, No = 0
+    }
+
     class Program
     {
         static X509Certificate serverCertificate = null;
 
         static void Main(string[] args)
         {
-            GetDBDesign();
+            //TestPagerService.TestPagerSql("select * from table1 limit {0} offset {1}", 4);
+
+            //Des();
+            teslaHistoryInvoiceimport();
             Console.WriteLine("结束");
             Console.Read();
-            //new TExcel().ReadVoucherDataEEplus();
         }
 
+        public static void Des()
+        {
+            Regex r = new Regex("<mw>.*</mw>");
+            string filePath = @"C:\Julius_J_Zhu\09DataLayer\MainTest\documents\log.txt";
+            string str = ReadFile(filePath);
+
+            var collection = r.Matches(str);
+
+            StringBuilder ret = new StringBuilder();
+
+            var index = 1;
+
+            foreach (var mat in collection)
+            {
+                string value = mat.ToString();
+
+                if (value != null)
+                {
+
+                    string realValue = value.Replace("<mw>", string.Empty).Replace("</mw>", string.Empty);
+
+                    string resultValue = DBQuery.AesDecrypt(realValue);
+
+                    str = str.Replace(value, "<mw>" + resultValue + "</mw>");
+                }
+
+                index++;
+            }
+
+            r = new Regex("<json>.*</json>");
+            collection = r.Matches(str);
+
+            foreach (var mat in collection)
+            {
+                string value = mat.ToString();
+
+                if (value != null)
+                {
+
+                    string realValue = value.Replace("<json>", string.Empty).Replace("</json>", string.Empty);
+
+                    string resultValue = DBQuery.AesDecrypt(realValue);
+
+                    str = str.Replace(value, "<json>" + resultValue + "</json>");
+                }
+            }
+
+            string fileName = "log" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+
+            SaveFile(str, fileName);
+
+            // 写入文件
+        }
+
+        public static void TestBwJDCInvoiceData()
+        {
+            string filePath = @"C:\Julius_J_Zhu\09DataLayer\MainTest\documents\test.xml";
+            string str = ReadFile(filePath);
+            BaiWangYbjszOutput wrraper = (BaiWangYbjszOutput)XmlSerializer.LoadFromXml(str, typeof(BaiWangYbjszOutput));
+            //string json = DBQuery.AesDecrypt(wrraper.json);
+            //string json = wrraper.json;
+            //var res = DeserializeTaxControlQueryInfo<BaiWangVehicleFpplcxObj>(json);
+        }
+
+        private void TestDeserializeTaxControlQueryInfo()
+        {
+            string filePath = @"C:\Julius_J_Zhu\09DataLayer\MainTest\documents\test.xml";
+            string str = ReadFile(filePath);
+            DBQueryOutputObj wrraper = new DBQueryOutputObj();
+            wrraper = (DBQueryOutputObj)XmlSerializer.LoadFromXml(str, typeof(DBQueryOutputObj));
+            var res = DeserializeTaxControlQueryInfo<BWRedLetterMX>(wrraper.json);
+            Console.WriteLine("结束");
+            Console.Read();
+        }
+
+        private static List<T> DeserializeTaxControlQueryInfo<T>(string strData)
+        {
+            dynamic queryObj = JsonConvert.DeserializeObject(strData);
+
+            // 处理这种情况 [{},{}]
+            if (queryObj is Newtonsoft.Json.Linq.JArray)
+            {
+                return JsonConvert.DeserializeObject<List<T>>(strData);
+            }
+
+            // { 'data':[]} 处理这种数据的情况，报 out of index 的bug
+            if (queryObj.data != null && queryObj.data is Newtonsoft.Json.Linq.JArray)
+            {
+                var dataList = queryObj.data as Newtonsoft.Json.Linq.JArray;
+
+                if (dataList.Count == 0)
+                {
+                    return new List<T>();
+                }
+            }
+
+            var content = queryObj.data != null && queryObj.data[0] is Newtonsoft.Json.Linq.JArray ? queryObj.data[0] : queryObj.data;
+            var queryList = JsonConvert.DeserializeObject<List<T>>(Convert.ToString(content));
+            return queryList;
+        }
+
+        /// <summary>
+        /// 读取文件内容
+        /// </summary>
+        /// <param name="path">文件路径和文件名</param>
+        /// <returns>文件内容</returns>
+        public static string ReadFile(string path)
+        {
+            string str = string.Empty;
+            try
+            {
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    str = reader.ReadToEnd();
+                    return str;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("读文件错误:" + ex.Message.ToString());
+            }
+
+            return str;
+        }
+
+
+        public static double ToJulianDate(DateTime date)
+        {
+            return date.ToOADate() + 2415018.5;
+        }
+
+        public static DateTime FromJulianDate(double julianDate)
+        {
+            return DateTime.FromOADate(julianDate - 2415018.5);
+        }
 
         private static void TestShowDecimal()
         {
@@ -86,6 +232,9 @@ namespace MainTest
             //DateTime d = DateTime.FromOADate(41813);
 
             //new OutputInvoiceIssuedRecordImport().UpdateInfo();
+
+            // 201803的数据
+            new OutputInvoiceIssuedRecordImport().ExcuteImportFiles(@"C:\Julius_J_Zhu\10Tesla\06test\35历史开票记录check\Invoice 汇总\Invoice 汇总", "2018-03");
         }
 
 
@@ -231,14 +380,14 @@ namespace MainTest
 
         private static void TestJsonSerializeObject()
         {
-            MTest model = new MTest()
-            {
-                VATType = "121212",
-                Name = "名字",
-            };
+            //MTest model = new MTest()
+            //{
+            //    VATType = "121212",
+            //    Name = "名字",
+            //};
 
 
-            string json = JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            //string json = JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
 
 
@@ -248,6 +397,21 @@ namespace MainTest
             MDataBaseDefine model = JsonConvert.DeserializeObject<MDataBaseDefine>(json);
 
 
+        }
+
+        private static void SaveFile(string str, string fileName)
+        {
+            using (FileStream fs2 = new FileStream(fileName, FileMode.Create))
+            {
+                StreamWriter sw = new StreamWriter(fs2);
+
+                //开始写入
+                sw.Write(str);
+                //清空缓冲区
+                sw.Flush();
+                //关闭流
+                sw.Close();
+            }
         }
 
 

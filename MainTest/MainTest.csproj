@@ -67,12 +67,17 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedLetterQuery\DBQuery.cs" />
+    <Compile Include="TestModel\BDDataGet.cs" />
+    <Compile Include="TestModel\GDDataGet.cs" />
     <Compile Include="TestModel\GenerateWordDBDesign.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TestModel\OutputInvoiceIssuedRecord.cs" />
+    <Compile Include="TestModel\TeslaHistoryInvoiceGetBase.cs" />
     <Compile Include="TestModel\TExcel.cs" />
     <Compile Include="TestModel\OutputInvoiceImportShipmentDto.cs" />
+    <Compile Include="TestModel\XmlObj.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -104,8 +109,10 @@
       <Name>Help.DBAccessLayer.OleDbDAL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="documents\" />
+    <Content Include="documents\log.txt" />
+    <Content Include="documents\test.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
