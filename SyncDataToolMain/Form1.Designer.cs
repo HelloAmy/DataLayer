@@ -34,6 +34,7 @@
             this.inputText = new System.Windows.Forms.RichTextBox();
             this.btn_DesLog = new System.Windows.Forms.Button();
             this.btn_desDecrypt = new System.Windows.Forms.Button();
+            this.btn_desAndRemark = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BWEncrypt
@@ -92,11 +93,22 @@
             this.btn_desDecrypt.UseVisualStyleBackColor = true;
             this.btn_desDecrypt.Click += new System.EventHandler(this.btn_desDecrypt_Click);
             // 
+            // btn_desAndRemark
+            // 
+            this.btn_desAndRemark.Location = new System.Drawing.Point(781, 267);
+            this.btn_desAndRemark.Name = "btn_desAndRemark";
+            this.btn_desAndRemark.Size = new System.Drawing.Size(75, 23);
+            this.btn_desAndRemark.TabIndex = 9;
+            this.btn_desAndRemark.Text = "解密航信发票和备注";
+            this.btn_desAndRemark.UseVisualStyleBackColor = true;
+            this.btn_desAndRemark.Click += new System.EventHandler(this.btn_desAndRemark_Click);
+            // 
             // readFileData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(877, 489);
+            this.Controls.Add(this.btn_desAndRemark);
             this.Controls.Add(this.btn_desDecrypt);
             this.Controls.Add(this.btn_DesLog);
             this.Controls.Add(this.inputText);
@@ -117,6 +129,7 @@
         private System.Windows.Forms.RichTextBox inputText;
         private System.Windows.Forms.Button btn_DesLog;
         private System.Windows.Forms.Button btn_desDecrypt;
+        private System.Windows.Forms.Button btn_desAndRemark;
     }
 }
 

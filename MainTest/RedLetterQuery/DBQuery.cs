@@ -12,21 +12,39 @@ namespace MainTest.RedLetterQuery
 
         public void TestMain()
         {
-            string sql = "select * from sqlite_master;";
+//            string sql = "select * from sqlite_master;";
 
-            string se = AesEncrypt(sql);
-            string xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-"<business comment=\"数据查询\" id=\"DBQuery\">" +
-    "<body yylxdm=\"1\">" +
-        "<input>" +
-            "<mw>" + se + "</mw>" +
-      "<db>SYSTEM</db>" +
-        "</input>" +
-    "</body>" +
-"</business>";
+//            string se = AesEncrypt(sql);
+//            string xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+//"<business comment=\"数据查询\" id=\"DBQuery\">" +
+//    "<body yylxdm=\"1\">" +
+//        "<input>" +
+//            "<mw>" + se + "</mw>" +
+//      "<db>SYSTEM</db>" +
+//        "</input>" +
+//    "</body>" +
+//"</business>";
 
+
+            //string result = DecodeBase64(Encoding.GetEncoding("gb2312"), "v6q+37rs19bU9ta1y7DXqNPDt6LGsdDFz6Kx7bHgusUzMTAxMTUxODA1MTI4MDM5");
 
         }
+
+        public static string DecodeBase64(Encoding encode, string result)
+        {
+            string decode = "";
+            byte[] bytes = Convert.FromBase64String(result);
+            try
+            {
+                decode = encode.GetString(bytes);
+            }
+            catch
+            {
+                decode = result;
+            }
+            return decode;
+        }
+
 
 
 

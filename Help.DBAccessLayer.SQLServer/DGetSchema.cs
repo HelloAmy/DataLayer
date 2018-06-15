@@ -1,6 +1,6 @@
 ﻿using Help.DBAccessLayer.IDAL;
 using Help.DBAccessLayer.Model.SqlGenerator;
-using Help.DBAccessLayer.Util;
+using Help.DBAccessLayer.DBUtil;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -140,11 +140,11 @@ order by
             {
                 MFieldDefine field = new MFieldDefine();
                 table.TableNameCH = reader["TableNameCH"] == DBNull.Value ? string.Empty : reader["TableNameCH"].ToString();
-                field.Index = DBUtil.GetDBValueInt(reader, "FieldIndex", 0);
-                field.FieldName = DBUtil.GetDBValueStr(reader, "FieldName", string.Empty);
-                field.IsAutoIncrement = DBUtil.GetDBValueBool(reader, "IsIdentity", false);
+                field.Index = DbUtil.GetDBValueInt(reader, "FieldIndex", 0);
+                field.FieldName = DbUtil.GetDBValueStr(reader, "FieldName", string.Empty);
+                field.IsAutoIncrement = DbUtil.GetDBValueBool(reader, "IsIdentity", false);
 
-                bool IsPrimaryKey = DBUtil.GetDBValueBool(reader, "IsPrimaryKey", false);
+                bool IsPrimaryKey = DBUtil.DbUtil.GetDBValueBool(reader, "IsPrimaryKey", false);
                 int maxPrimaryKeyIndex = fieldList != null && fieldList.Count > 0 ? fieldList.Max(sa => sa.PrimaryKeyIndex) : 0;
 
                 if (IsPrimaryKey)
@@ -154,11 +154,11 @@ order by
 
                 field.IsPrimaryKey = IsPrimaryKey;
 
-                field.DataType = DBUtil.GetDBValueStr(reader, "DataType", string.Empty);
-                field.Length = DBUtil.GetDBValueInt(reader, "DataTypeLength", 0);
-                field.DigitalLength = DBUtil.GetDBValueInt(reader, "DigitalLength", 0);
-                field.IsNullable = DBUtil.GetDBValueBool(reader, "IsNullable", false);
-                field.DefaultValue = DBUtil.GetDBValueStr(reader, "DefaultValue", string.Empty);
+                field.DataType = DbUtil.GetDBValueStr(reader, "DataType", string.Empty);
+                field.Length = DbUtil.GetDBValueInt(reader, "DataTypeLength", 0);
+                field.DigitalLength = DbUtil.GetDBValueInt(reader, "DigitalLength", 0);
+                field.IsNullable = DbUtil.GetDBValueBool(reader, "IsNullable", false);
+                field.DefaultValue = DbUtil.GetDBValueStr(reader, "DefaultValue", string.Empty);
 
                 // 处理默认值
                 if (!string.IsNullOrEmpty(field.DefaultValue))
@@ -176,7 +176,7 @@ order by
                     }
                 }
 
-                field.FieldNameCH = DBUtil.GetDBValueStr(reader, "FieldNameCH", string.Empty);
+                field.FieldNameCH = DbUtil.GetDBValueStr(reader, "FieldNameCH", string.Empty);
                 fieldList.Add(field);
             }
 
@@ -231,12 +231,12 @@ WHERE IDX.is_primary_key<>1
             while (reader.Read())
             {
                 MTableIndex model = new MTableIndex();
-                model.TableName = DBUtil.GetDBValueStr(reader, "TableName");
-                model.IndexType = DBUtil.GetDBValueStr(reader, "IndexType");
-                model.IndexName = DBUtil.GetDBValueStr(reader, "IndexName");
-                model.ColumnName = DBUtil.GetDBValueStr(reader, "ColumnName");
-                model.IsUnique = DBUtil.GetDBValueBool(reader, "IsUnique");
-                model.Sort = DBUtil.GetDBValueStr(reader, "Sort");
+                model.TableName = DbUtil.GetDBValueStr(reader, "TableName");
+                model.IndexType = DbUtil.GetDBValueStr(reader, "IndexType");
+                model.IndexName = DbUtil.GetDBValueStr(reader, "IndexName");
+                model.ColumnName = DbUtil.GetDBValueStr(reader, "ColumnName");
+                model.IsUnique = DbUtil.GetDBValueBool(reader, "IsUnique");
+                model.Sort = DbUtil.GetDBValueStr(reader, "Sort");
 
                 list.Add(model);
             }

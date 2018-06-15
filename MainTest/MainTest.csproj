@@ -74,6 +74,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TestModel\OutputInvoiceIssuedRecord.cs" />
+    <Compile Include="TestModel\TAppendExcel.cs" />
     <Compile Include="TestModel\TeslaHistoryInvoiceGetBase.cs" />
     <Compile Include="TestModel\TExcel.cs" />
     <Compile Include="TestModel\OutputInvoiceImportShipmentDto.cs" />
@@ -87,6 +88,10 @@
     <ProjectReference Include="..\Help.DBAccessLayer.Business\Help.DBAccessLayer.Business.csproj">
       <Project>{251d9501-872b-428d-b815-da756a43a087}</Project>
       <Name>Help.DBAccessLayer.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Help.DBAccessLayer.DBUtil\Help.DBAccessLayer.DBUtil.csproj">
+      <Project>{c62df0da-8950-4b92-a94e-964dbf8f75ea}</Project>
+      <Name>Help.DBAccessLayer.DBUtil</Name>
     </ProjectReference>
     <ProjectReference Include="..\Help.DBAccessLayer.Factory\Help.DBAccessLayer.Factory.csproj">
       <Project>{56070205-2b64-40ba-8bac-06147c6b8d7c}</Project>

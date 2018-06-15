@@ -1,6 +1,6 @@
-﻿using Help.DBAccessLayer.IDAL;
+﻿using Help.DBAccessLayer.DBUtil;
+using Help.DBAccessLayer.IDAL;
 using Help.DBAccessLayer.Model;
-using Help.DBAccessLayer.Util;
 using IBM.Data.DB2;
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace Help.DBAccessLayer.DB2DAL
             {
                 while (reader.Read())
                 {
-                    MTableDesc model = new MTableDesc(); 
+                    MTableDesc model = new MTableDesc();
                     model.TableName = reader["NAME"] == DBNull.Value ? string.Empty : reader["NAME"].ToString();
                     model.Creator = reader["CREATOR"] == DBNull.Value ? string.Empty : reader["CREATOR"].ToString();
                     model.CreateDateTime = reader["CTIME"] == DBNull.Value ? DateTime.Parse("1990-01-01") : Convert.ToDateTime(reader["CTIME"].ToString());
@@ -57,14 +57,14 @@ FROM sysibm.syscolumns where tbname ='{0}'", tableName);
                 while (reader.Read())
                 {
                     MColumn model = new MColumn();
-                    model.ColumnName = DBUtil.GetDBValueStr(reader, "NAME");
-                    model.Creator = DBUtil.GetDBValueStr(reader, "TBCREATOR");
-                    model.Remarks = DBUtil.GetDBValueStr(reader, "REMARKS");
-                    model.ColType = DBUtil.GetDBValueStr(reader, "COLTYPE");
-                    model.Length = DBUtil.GetDBValueInt(reader, "LENGTH");
-                    model.IsNullable = DBUtil.GetDBValueBool(reader, "NULLS");
-                    model.DefaultValue = DBUtil.GetDBValueStr(reader, "DEFAULT");
-                    model.KeySeq = DBUtil.GetDBValueInt(reader, "KEYSEQ");
+                    model.ColumnName = DbUtil.GetDBValueStr(reader, "NAME");
+                    model.Creator = DbUtil.GetDBValueStr(reader, "TBCREATOR");
+                    model.Remarks = DbUtil.GetDBValueStr(reader, "REMARKS");
+                    model.ColType = DbUtil.GetDBValueStr(reader, "COLTYPE");
+                    model.Length = DbUtil.GetDBValueInt(reader, "LENGTH");
+                    model.IsNullable = DbUtil.GetDBValueBool(reader, "NULLS");
+                    model.DefaultValue = DbUtil.GetDBValueStr(reader, "DEFAULT");
+                    model.KeySeq = DbUtil.GetDBValueInt(reader, "KEYSEQ");
 
                     ret.Add(model);
                 }

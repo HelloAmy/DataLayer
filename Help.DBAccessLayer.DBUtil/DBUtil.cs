@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Help.DBAccessLayer.Util
+namespace Help.DBAccessLayer.DBUtil
 {
-    public class DBUtil
+    public class DbUtil
     {
         public static string GetDBValueStr(IDataReader reader, string columnName, string defaultValue = "")
         {

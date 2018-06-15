@@ -41,13 +41,55 @@ namespace MainTest
 
         static void Main(string[] args)
         {
-            //TestPagerService.TestPagerSql("select * from table1 limit {0} offset {1}", 4);
-
-            //Des();
-            teslaHistoryInvoiceimport();
+            new TExcel().TestCreateExcel();
             Console.WriteLine("结束");
             Console.Read();
         }
+
+
+        private static void TestDisplayDecimal()
+        {
+            // 结论1：string.Format("{0:N2}", d) 与  Math.Round(d, 2).ToString() 【不总是相等】
+            // 结论2:string.Format("{0:N2}", d) 与 RoundChinese(d, 2).ToString() 【总是相等】
+
+            for (var i = 0; i <= 30; i++)
+            {
+                var d = 2.14M + i / 1000M;
+                bool ret = string.Format("{0:N2}", d) == Math.Round(d, 2).ToString();
+                if (!ret)
+                {
+                    Console.WriteLine(d + ":" + string.Format("{0:N2}", d) + "," + Math.Round(d, 2) + "," + ret);
+                }
+            }
+
+            Console.WriteLine("-----------------------");
+
+            for (var i = 0; i <= 30; i++)
+            {
+                var d = 2.14M + i / 1000M;
+                bool ret = string.Format("{0:N2}", d) == RoundChinese(d, 2).ToString();
+
+                Console.WriteLine(d + ":" + string.Format("{0:N2}", d) + "," + RoundChinese(d, 2).ToString() + "," + ret);
+            }
+        }
+
+        /// <summary>
+        /// 中国版的四舍五入
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="digit"></param>
+        /// <returns></returns>
+        public static decimal RoundChinese(decimal value, int digit)
+        {
+            double vt = Math.Pow(10, digit);
+            //1.乘以倍数 + 0.5
+            decimal vx = value * (decimal)vt + 0.5M;
+            //2.向下取整
+            decimal temp = Math.Floor(vx);
+            //3.再除以倍数
+            return (temp / (decimal)vt);
+        }
+
 
         public static void Des()
         {

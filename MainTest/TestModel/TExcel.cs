@@ -1,4 +1,5 @@
 ﻿using Help.DBAccessLayer.NPOIDAL;
+using Help.DBAccessLayer.DBUtil;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,34 @@ using System.Threading.Tasks;
 
 namespace MainTest.TestModel
 {
+
     public class TExcel
     {
+
+        public void TestCreateExcel()
+        {
+
+            List<MPerson> list = new List<MPerson>();
+
+            for (var i = 0; i < 3; i++)
+            {
+                list.Add(new MPerson()
+                {
+                    Age = i,
+                    Name = "Name" + i.ToString()
+                });
+            }
+
+            var table = list.ToDataTable();
+
+            var str = Directory.GetCurrentDirectory();
+
+            // 注意这个文件名， 没有后缀哈
+            //NPOIDAO.WriteExcel(table, "测试文档", null);
+
+            // 注意这个文件名 要加后缀
+            //NPOIDAO.AppendExcel(table, "测试文档.xlsx");
+        }
 
 
         public void CreateBDHistorySQL()
@@ -27,7 +54,7 @@ namespace MainTest.TestModel
             while (forMonth != to)
             {
                 string month = forMonth.ToString("yyyyMM");
-                
+
 
                 string fileName = month + " BD AX output";
 
@@ -35,14 +62,14 @@ namespace MainTest.TestModel
 
                 string period = forMonth.Year + "-Period " + forMonth.Month;
 
-                TestGenerateSQL(fullName, fileName,  period);
+                TestGenerateSQL(fullName, fileName, period);
 
 
 
 
                 forMonth = forMonth.AddMonths(1);
 
-                 
+
             }
         }
 
@@ -955,5 +982,17 @@ namespace MainTest.TestModel
             Console.WriteLine("完毕...");
             Console.Read();
         }
+    }
+
+
+    public class MPerson
+    {
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public int Age { get; set; }
     }
 }
