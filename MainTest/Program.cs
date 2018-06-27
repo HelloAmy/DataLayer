@@ -16,7 +16,6 @@ using System.Net.Sockets;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Net;
-using Microsoft.International.Formatters;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Data;
@@ -364,15 +363,6 @@ namespace MainTest
 
         }
 
-
-        static void MoneyParse()
-        {
-            decimal d = 999999999999999M;
-
-            Console.WriteLine(InternationalNumericFormatter.FormatWithCulture("Ln", d, null, new System.Globalization.CultureInfo("zh-CHS")));
-
-            Console.Read();
-        }
 
         private int _columnIndex = -1;
         private void ResetColumnIndex()
